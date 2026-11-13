@@ -226,6 +226,11 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
 .tip .ic svg{width:15px;height:15px;fill:currentColor}
 .tip b{color:var(--warn);display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .fb-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.autobar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:-4px}
+.autobar .track{flex:1;min-width:120px;height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.autobar .track i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,var(--ok),var(--accent-3));transform-origin:left;animation:countdown linear forwards}
+.autobar .btn{padding:6px 12px;font-size:13px}
+@keyframes countdown{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 .hint{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .toast{position:fixed;left:50%;top:calc(76px + env(safe-area-inset-top,0px));z-index:50;transform:translateX(-50%);padding:10px 18px;border-radius:99px;font-weight:700;font-family:var(--f-display);
   color:#fff;background:linear-gradient(135deg,var(--accent-2),var(--warn));box-shadow:var(--shadow-lg);animation:toast 1.8s var(--ease) forwards;pointer-events:none;white-space:nowrap}
@@ -345,7 +350,7 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
       <div class="toggles">
         <label class="tog"><input type="checkbox" id="optShuffle"> Trộn thứ tự câu hỏi</label>
         <label class="tog"><input type="checkbox" id="optRequeue"> Hỏi lại câu làm sai ở cuối lượt</label>
-        <label class="tog"><input type="checkbox" id="optAuto"> Tự chuyển câu khi trả lời đúng</label>
+        <label class="tog"><input type="checkbox" id="optAuto"> Tự chuyển câu sau 2 giây khi trả lời đúng</label>
       </div>
     </section>
 
@@ -511,7 +516,7 @@ function loadDb(){
 }
 function saveDb(){ try { localStorage.setItem(KEY, JSON.stringify(db)); } catch(e) {} }
 function blankUser(name){
-  return {name, hist: {}, settings: {topics: [], pool: "all", count: 20, shuffle: true, requeue: true, auto: false},
+  return {name, hist: {}, settings: {topics: [], pool: "all", count: 20, shuffle: true, requeue: true, auto2: true},
     session: null, lastWrong: [], days: {count: 0, last: null}, updated: 0};
 }
 let U = null;   // current user profile
@@ -628,7 +633,7 @@ function renderHome(){
   document.querySelectorAll("#poolSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === st.pool));
   document.querySelectorAll("#countSeg button").forEach(b => b.setAttribute("aria-pressed", +b.dataset.v === st.count));
   requestAnimationFrame(() => { moveSeg($("poolSeg")); moveSeg($("countSeg")); });
-  $("optShuffle").checked = st.shuffle; $("optRequeue").checked = st.requeue; $("optAuto").checked = st.auto;
+  $("optShuffle").checked = st.shuffle; $("optRequeue").checked = st.requeue; $("optAuto").checked = st.auto2 !== false;
   const pool = buildPool(), n = st.count ? Math.min(st.count, pool.length) : pool.length;
   $("poolNote").textContent = st.topics.length === 1 && st.topics[0] === "__none__" ? "Hãy chọn ít nhất một chủ đề." :
     pool.length ? `${n} câu trong lượt này · ${pool.length} câu phù hợp` : "Không có câu nào phù hợp bộ lọc.";
@@ -654,7 +659,7 @@ $("allTopics").onclick = () => { U.settings.topics = U.settings.topics.length ==
 $("poolSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; U.settings.pool = b.dataset.v; touch(); renderHome(); });
 $("countSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; U.settings.count = +b.dataset.v; touch(); renderHome(); });
 ["optShuffle","optRequeue","optAuto"].forEach(id => $(id).addEventListener("change", e => {
-  U.settings[{optShuffle: "shuffle", optRequeue: "requeue", optAuto: "auto"}[id]] = e.target.checked; touch();
+  U.settings[{optShuffle: "shuffle", optRequeue: "requeue", optAuto: "auto2"}[id]] = e.target.checked; touch();
 }));
 addEventListener("resize", () => { if (!$("home").hidden){ moveSeg($("poolSeg")); moveSeg($("countSeg")); } });
 
@@ -674,7 +679,7 @@ $("shuffleBtn").onclick = () => {
   if (!k) renderQ(true);
   toast("Đã trộn các câu còn lại");
 };
-function pauseClock(){ const s = U.session; if (s && s.start){ s.elapsed += Date.now() - s.start; s.start = null; } }
+function pauseClock(){ clearTimeout(autoTimer); const s = U.session; if (s && s.start){ s.elapsed += Date.now() - s.start; s.start = null; } }
 function updateCounts(){
   const s = U.session, v = Object.values(s.first);
   $("qpos").textContent = `Câu ${Math.min(s.idx + 1, s.queue.length)} / ${s.queue.length}`;
@@ -684,6 +689,7 @@ function updateCounts(){
 }
 
 let picked = [], autoTimer = null;
+const AUTO_MS = 2000;
 function renderQ(animate){
   clearTimeout(autoTimer);
   const s = U.session, id = s.queue[s.idx], q = byId[id], need = q.a.length;
@@ -752,10 +758,17 @@ function grade(){
     (q.tip ? `<div class="tip"><span class="ic">${ICON_TIP}</span><span><b>Mẹo nhớ</b>${fmtText(q.tip)}</span></div>` : "") +
     `<div class="fb-actions"><span class="note">${!correct && s.retry[id] && s.queue.lastIndexOf(id) > s.idx ? "Câu này sẽ được hỏi lại cuối lượt." : ""}</span>` +
     `<button class="btn primary" id="nextBtn">${last ? "Xem kết quả" : "Câu tiếp →"}</button></div>`;
+  const auto = correct && U.settings.auto2 !== false;
+  if (auto){
+    fb.insertAdjacentHTML("beforeend",
+      `<div class="autobar" id="autoBar"><span class="track"><i style="animation-duration:${AUTO_MS}ms"></i></span>` +
+      `<span class="note">${last ? "Xem kết quả" : "Tự chuyển câu"} sau 2 giây</span><button class="btn ghost" id="stayBtn">Ở lại đọc</button></div>`);
+    $("stayBtn").onclick = () => { clearTimeout(autoTimer); $("autoBar").remove(); $("nextBtn").focus({preventScroll: true}); };
+  }
   fb.hidden = false;
   $("nextBtn").onclick = next; $("nextBtn").focus({preventScroll: true});
   setTimeout(() => fb.scrollIntoView({behavior: reduced ? "auto" : "smooth", block: "nearest"}), 60);
-  if (correct && U.settings.auto) autoTimer = setTimeout(next, 1700);
+  if (auto) autoTimer = setTimeout(next, AUTO_MS);
 }
 function next(){
   clearTimeout(autoTimer);
