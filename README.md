@@ -1,18 +1,25 @@
-# DSR301 Ôn Tập
+# Ôn Tập Kì 5
 
-Web ôn tập 262 câu trắc nghiệm môn **DSR301 (Data Science with R)**, theo kiểu Quizlet:
+Web ôn tập trắc nghiệm kì 5, gộp nhiều môn trong một trang: https://wunecutee.github.io/on-tap-ki-5/
 
+| Mã môn | Tên môn | Số câu |
+| --- | --- | --- |
+| DSR301 | Data Science with R | 262 |
+| DPL302 | Deep Learning | 252 |
+
+- Vào trang sẽ hỏi tên, sau đó chọn mã môn. Tiến trình mỗi môn được lưu riêng theo tên.
 - Mỗi câu hiển thị đúng ảnh cắt từ slide (câu hỏi và các đáp án), đáp án đã được kiểm tra lại.
-- Trả lời xong sẽ hiện giải thích và mẹo nhớ; câu làm sai được hỏi lại ở cuối lượt.
-- Có trộn câu, lọc theo chủ đề, chế độ "chỉ câu đang sai", chuỗi câu đúng liên tiếp và thống kê sau mỗi lượt.
-- Lần đầu vào trang sẽ hỏi tên. **Tiến trình học được lưu theo tên.**
+- Trả lời xong hiện giải thích và mẹo nhớ; trả lời đúng thì tự chuyển câu sau 2 giây.
+- Nút **Học câu sai & chưa học** bỏ qua các câu đã trả lời đúng.
+- Nút **Xoá tiến trình môn này** để học lại từ đầu.
+- Có trộn câu, lọc theo chủ đề, hỏi lại câu sai cuối lượt, chuỗi câu đúng và thống kê sau mỗi lượt.
 
 ## Cấu trúc
 
 | File | Nội dung |
 | --- | --- |
 | `index.html` | Toàn bộ giao diện và logic |
-| `questions.js` | 262 câu (ảnh WebP nhúng sẵn, đáp án, giải thích, mẹo) |
+| `data/dsr301.js`, `data/dpl302.js` | Câu hỏi từng môn (ảnh WebP nhúng sẵn, đáp án, giải thích, mẹo), chỉ tải khi chọn môn |
 | `config.js` | Địa chỉ Worker để đồng bộ tiến trình (để trống = chỉ lưu trên trình duyệt) |
 | `worker/worker.js` | Cloudflare Worker ghi tiến trình thành `progress/<ten>.json` trên nhánh `progress` |
 

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DSR301 Ôn Tập</title>
-<meta name="description" content="Ôn tập 262 câu trắc nghiệm DSR301 (Data Science with R) có giải thích, mẹo và lưu tiến trình theo tên.">
+<title>Ôn Tập Kì 5</title>
+<meta name="description" content="Ôn tập trắc nghiệm kì 5: DSR301 (Data Science with R) và DPL302 (Deep Learning), có giải thích, mẹo và lưu tiến trình theo tên.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
@@ -55,7 +55,6 @@ button,input{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:10px}
 
-/* aurora */
 .aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(1200px 600px at 50% -10%,var(--bg-2),transparent 70%)}
 .aurora i{position:absolute;width:52vmax;height:52vmax;border-radius:50%;filter:blur(70px);opacity:.9;animation:drift 26s var(--ease) infinite alternate}
 .aurora i:nth-child(1){background:var(--blob-a);top:-22vmax;left:-12vmax}
@@ -76,57 +75,78 @@ button{cursor:pointer}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .note{font-size:13px;color:var(--muted)}
 
-/* top bar */
-.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;gap:12px;padding:14px 0;margin-bottom:6px}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;gap:10px;padding:14px 0;margin-bottom:6px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--bg)}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:18px;background:none;border:0;padding:4px}
-.logo{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:17px;
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:18px;background:none;border:0;padding:4px;white-space:nowrap}
+.logo{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;flex:none;
   background:linear-gradient(135deg,var(--accent),var(--accent-3));box-shadow:0 6px 18px -6px var(--accent)}
 .topbar .sp{flex:1}
+.pillbtn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--glass);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:var(--f-mono);transition:transform .2s var(--spring)}
+.pillbtn:hover{transform:translateY(-1px)}
+.pillbtn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5}
 .sync{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);padding:6px 11px;border-radius:99px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .sync i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
-.sync[data-s="ok"] i{background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:ping 2.4s infinite}
+.sync[data-s="ok"] i{background:var(--ok);animation:ping 2.4s infinite}
 .sync[data-s="busy"] i{background:var(--warn);animation:blink 1s infinite}
 .sync[data-s="err"] i{background:var(--bad)}
 @keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}80%,100%{box-shadow:0 0 0 7px transparent}}
 @keyframes blink{50%{opacity:.3}}
 .user{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:99px;border:1px solid var(--line);background:var(--glass);font-weight:600;font-size:14px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .2s var(--spring)}
 .user:hover{transform:translateY(-1px)}
-.avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;font-family:var(--f-display);background:linear-gradient(135deg,var(--accent-2),var(--accent))}
+.avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;font-family:var(--f-display);background:linear-gradient(135deg,var(--accent-2),var(--accent));flex:none}
 .user .nm{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* buttons */
 .btn{position:relative;overflow:hidden;border:1px solid var(--line-2);background:var(--surface);border-radius:14px;padding:11px 18px;font-weight:600;
   transition:transform .18s var(--spring),box-shadow .2s,background .2s,border-color .2s}
 .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
 .btn:active{transform:translateY(0) scale(.98)}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .btn.primary{border:0;color:#fff;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 60%,var(--accent-3)));box-shadow:0 10px 24px -10px var(--accent)}
-.btn.primary::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%)}
-.btn.primary:hover::after{animation:shine .9s var(--ease)}
+.btn.warm{border:0;color:#fff;background:linear-gradient(135deg,var(--accent-2),color-mix(in srgb,var(--accent-2) 55%,var(--warn)));box-shadow:0 10px 24px -10px var(--accent-2)}
+.btn.primary::after,.btn.warm::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%)}
+.btn.primary:hover::after,.btn.warm:hover::after{animation:shine .9s var(--ease)}
 @keyframes shine{to{transform:translateX(120%)}}
-.btn.big{padding:15px 28px;font-size:16px;border-radius:16px}
+.btn.big{padding:15px 26px;font-size:16px;border-radius:16px}
 .btn.ghost{background:transparent;border-color:transparent}
 .btn.ghost:hover{background:var(--surface-2);box-shadow:none}
+.btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent);background:var(--bad-soft)}
+.btn .sub{display:block;font-size:12px;font-weight:500;opacity:.85}
 .ripple{position:absolute;border-radius:50%;transform:scale(0);background:currentColor;opacity:.25;pointer-events:none;animation:rip .6s var(--ease)}
 @keyframes rip{to{transform:scale(4);opacity:0}}
 kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:6px;padding:0 6px;color:var(--muted);background:var(--surface)}
 
-/* view transitions */
 .view{animation:viewIn .5s var(--ease) both}
 @keyframes viewIn{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
 .stagger>*{animation:viewIn .55s var(--ease) both}
 .stagger>*:nth-child(2){animation-delay:.06s}.stagger>*:nth-child(3){animation-delay:.12s}
 .stagger>*:nth-child(4){animation-delay:.18s}.stagger>*:nth-child(5){animation-delay:.24s}.stagger>*:nth-child(6){animation-delay:.3s}
 
-/* home */
 .hero{display:flex;flex-direction:column;gap:10px;padding-top:6px}
 .hero h1{font-size:clamp(30px,6.4vw,48px);font-weight:800;letter-spacing:-.025em}
 .grad{background:linear-gradient(100deg,var(--accent) 0%,var(--accent-3) 45%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:gradmove 8s ease-in-out infinite alternate}
 @keyframes gradmove{to{background-position:100% 0}}
 .hero p{margin:0;max-width:60ch;color:var(--muted);font-size:16px}
+
+/* subject picker */
+.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.subj{position:relative;text-align:left;border:1.5px solid var(--line);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:14px;overflow:hidden;
+  background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow);transition:transform .3s var(--spring),box-shadow .3s,border-color .3s}
+.subj::before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-70px;top:-90px;background:var(--c);opacity:.22;filter:blur(10px);transition:transform .6s var(--ease)}
+.subj:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--c)}
+.subj:hover::before{transform:scale(1.25)}
+.subj .code{font-family:var(--f-mono);font-weight:700;font-size:13px;letter-spacing:.06em;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);padding:4px 10px;border-radius:8px;width:max-content}
+.subj h2{font-size:24px}
+.subj .stats{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.subj .bar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;display:flex}
+.subj .bar i{height:100%;width:0;transition:width 1s var(--ease)}
+.subj .go{display:flex;align-items:center;justify-content:space-between;font-weight:700}
+.subj .go span:last-child{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#fff;transition:transform .3s var(--spring)}
+.subj:hover .go span:last-child{transform:translateX(4px)}
+.subj.loading .go span:last-child{animation:spin .8s linear infinite}
+
 .dash{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
-.bigring{--p:0;width:150px;height:150px;border-radius:50%;position:relative;display:grid;place-items:center}
+.bigring{width:150px;height:150px;border-radius:50%;position:relative;display:grid;place-items:center;flex:none}
 .bigring svg{position:absolute;inset:0;transform:rotate(-90deg)}
 .bigring circle{fill:none;stroke-width:12;stroke-linecap:round}
 .bigring .track{stroke:var(--surface-2)}
@@ -140,6 +160,7 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
 .tile span{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
 .tile .dot{width:8px;height:8px;border-radius:50%}
 .tile.fire b{background:linear-gradient(90deg,var(--accent-2),var(--warn));-webkit-background-clip:text;background-clip:text;color:transparent}
+.dash-foot{grid-column:1/-1;display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px}
 .section-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .section-h h2{font-size:19px}
 .topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
@@ -159,9 +180,9 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
 .field{display:flex;flex-direction:column;gap:8px;min-width:0}
 .field .lbl{font-weight:600;font-size:14px}
 .seg{position:relative;display:flex;border:1px solid var(--line);border-radius:14px;padding:4px;gap:2px;background:var(--surface-2);width:max-content;max-width:100%;flex-wrap:wrap}
-.seg button{position:relative;z-index:1;border:0;background:transparent;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--muted);transition:color .2s}
+.seg button{position:relative;z-index:1;border:0;background:transparent;border-radius:10px;padding:8px 13px;font-size:13px;font-weight:600;color:var(--muted);transition:color .2s}
 .seg button[aria-pressed="true"]{color:var(--fg)}
-.seg .pill-bg{position:absolute;z-index:0;top:4px;bottom:4px;border-radius:10px;background:var(--surface);box-shadow:0 2px 8px rgba(0,0,0,.12);transition:left .35s var(--spring),width .35s var(--spring),top .35s var(--spring)}
+.seg .pill-bg{position:absolute;z-index:0;border-radius:10px;background:var(--surface);box-shadow:0 2px 8px rgba(0,0,0,.12);transition:left .35s var(--spring),width .35s var(--spring),top .35s var(--spring)}
 .toggles{display:flex;flex-direction:column;gap:12px;grid-column:1/-1}
 .tog{display:flex;align-items:center;gap:12px;font-size:14px;cursor:pointer;width:max-content;max-width:100%}
 .tog input{appearance:none;-webkit-appearance:none;width:44px;height:26px;border-radius:99px;background:var(--line-2);position:relative;cursor:pointer;flex:none;transition:background .25s;margin:0}
@@ -169,6 +190,8 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
 .tog input:checked{background:linear-gradient(135deg,var(--accent),var(--accent-3))}
 .tog input:checked::after{transform:translateX(18px)}
 .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.confirm{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--bad-soft);animation:slideUp .3s var(--ease)}
+.confirm span{flex:1;min-width:180px;font-size:14px}
 
 /* quiz */
 .qtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -179,7 +202,7 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
 @keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 .qcount{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .qcount .ok{color:var(--ok);font-weight:700}.qcount .bad{color:var(--bad);font-weight:700}
-.streak{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--accent-2);transition:transform .3s var(--spring)}
+.streak{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--accent-2)}
 .streak svg{width:15px;height:15px}
 .streak.bump{animation:bump .5s var(--spring)}
 @keyframes bump{40%{transform:scale(1.45)}}
@@ -188,7 +211,7 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
 .tag{font-size:12px;font-weight:600;padding:4px 11px;border-radius:99px;background:var(--surface-2);color:var(--muted)}
 .tag.multi{background:var(--warn-soft);color:var(--warn)}
 .tag.retry{background:var(--bad-soft);color:var(--bad)}
-.slide{background:#fff;border-radius:16px;border:1px solid var(--line);padding:16px;display:flex;justify-content:center;box-shadow:inset 0 0 0 1px rgba(0,0,0,.02)}
+.slide{background:#fff;border-radius:16px;border:1px solid var(--line);padding:16px;display:flex;justify-content:center}
 .slide img{display:block;width:100%;height:auto;max-height:60vh;object-fit:contain}
 .answers{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:12px}
 .ans{position:relative;border:2px solid var(--line-2);background:var(--surface);border-radius:18px;padding:16px 0;font-family:var(--f-display);font-size:22px;font-weight:700;
@@ -236,9 +259,8 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
   color:#fff;background:linear-gradient(135deg,var(--accent-2),var(--warn));box-shadow:var(--shadow-lg);animation:toast 1.8s var(--ease) forwards;pointer-events:none;white-space:nowrap}
 @keyframes toast{0%{opacity:0;transform:translate(-50%,-14px) scale(.9)}15%{opacity:1;transform:translate(-50%,0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-10px)}}
 
-/* results */
 .score{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .trows{display:flex;flex-direction:column;gap:12px}
 .trow{display:grid;grid-template-columns:minmax(0,1fr) 130px 52px;gap:12px;align-items:center;font-size:13.5px}
 .trow .bar{height:9px;border-radius:99px;background:var(--surface-2);overflow:hidden}
@@ -258,12 +280,10 @@ kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line-2);bord
 .witem .body{padding:0 14px 16px;display:flex;flex-direction:column;gap:12px;animation:slideUp .35s var(--ease)}
 .empty{text-align:center;padding:22px;color:var(--muted)}
 
-/* modal */
 .overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px max(16px,env(safe-area-inset-right,0px)) 20px max(16px,env(safe-area-inset-left,0px));
   background:color-mix(in srgb,var(--bg) 55%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:fade .3s var(--ease)}
 @keyframes fade{from{opacity:0}}
-.modal{width:min(460px,100%);background:var(--surface);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow-lg);padding:28px;display:flex;flex-direction:column;gap:16px;
-  animation:modalIn .55s var(--spring)}
+.modal{width:min(460px,100%);background:var(--surface);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow-lg);padding:28px;display:flex;flex-direction:column;gap:16px;animation:modalIn .55s var(--spring)}
 @keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(.94)}}
 .modal .wave{font-size:40px;line-height:1;display:inline-block;transform-origin:70% 70%;animation:wave 2.2s ease-in-out infinite}
 @keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%,40%{transform:rotate(-8deg)}}
@@ -283,13 +303,14 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
 
 @media (max-width:640px){
   .dash,.score{grid-template-columns:1fr;justify-items:center}
-  .tiles,.stats{width:100%}
+  .tiles,.rstats{width:100%}
+  .dash-foot{justify-content:center}
   .opts{grid-template-columns:1fr}
   .answers{gap:8px}.ans{font-size:19px;padding:13px 0;border-radius:14px}
   .trow{grid-template-columns:minmax(0,1fr) 80px 44px}
   .pad{padding:18px}
-  .sync .tx{display:none}
-  .user .nm{max-width:80px}
+  .sync .tx,.brand .bt{display:none}
+  .user .nm{max-width:70px}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -302,32 +323,57 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
 
 <div class="wrap">
   <header class="topbar">
-    <button class="brand" id="brandBtn" aria-label="Về trang chủ"><span class="logo">R</span>DSR301</button>
+    <button class="brand" id="brandBtn" aria-label="Chọn môn"><span class="logo">K5</span><span class="bt">Ôn tập kì 5</span></button>
+    <button class="pillbtn" id="subjBtn" hidden title="Đổi môn"><span id="subjCode"></span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
     <span class="sp"></span>
-    <span class="sync" id="sync" data-s="local" title=""><i></i><span class="tx" id="syncTx">Lưu trên máy này</span></span>
+    <span class="sync" id="sync" data-s="local"><i></i><span class="tx" id="syncTx">Lưu trên máy này</span></span>
     <button class="user" id="userBtn" hidden title="Đổi người học"><span class="avatar" id="avatar">?</span><span class="nm" id="userName"></span></button>
   </header>
+
+  <!-- SUBJECT PICKER -->
+  <main id="pick" class="wrap stagger" hidden>
+    <section class="hero">
+      <span class="eyebrow">Ôn tập trắc nghiệm · kì 5</span>
+      <h1 id="pickGreet">Chọn <span class="grad">môn học</span></h1>
+      <p>Mỗi câu là ảnh cắt từ bộ slide ôn thi, đáp án đã kiểm tra lại, kèm giải thích và mẹo nhớ. Tiến trình mỗi môn được lưu riêng theo tên của bạn.</p>
+    </section>
+    <section class="subjects" id="subjects"></section>
+  </main>
 
   <!-- HOME -->
   <main id="home" class="wrap stagger" hidden>
     <section class="hero">
-      <span class="eyebrow">Data Science with R · 262 câu trắc nghiệm</span>
-      <h1 id="greet">Ôn tập <span class="grad">DSR301</span></h1>
-      <p>Mỗi câu là ảnh cắt từ bộ slide ôn thi, đáp án đã kiểm tra lại, kèm giải thích và mẹo nhớ. Tiến trình được lưu theo tên của bạn.</p>
+      <span class="eyebrow" id="homeEyebrow"></span>
+      <h1 id="greet"></h1>
     </section>
 
     <section class="glass pad dash">
-      <div class="bigring" id="masteryRing">
+      <div class="bigring">
         <svg viewBox="0 0 150 150"><circle class="track" cx="75" cy="75" r="62"/><circle class="val" id="ringVal" cx="75" cy="75" r="62" stroke-dasharray="389.6" stroke-dashoffset="389.6"/></svg>
         <div class="lbl"><b id="masteryPct">0%</b><small>đã thuộc</small></div>
       </div>
       <div class="tiles">
-        <div class="tile"><b data-count id="tOk">0</b><span><i class="dot" style="background:var(--ok)"></i>Đã thuộc</span></div>
-        <div class="tile"><b data-count id="tBad">0</b><span><i class="dot" style="background:var(--bad)"></i>Đang sai</span></div>
-        <div class="tile"><b data-count id="tNew">0</b><span><i class="dot" style="background:var(--line-2)"></i>Chưa làm</span></div>
-        <div class="tile fire"><b data-count id="tDays">0</b><span>Ngày học liên tiếp</span></div>
+        <div class="tile"><b id="tOk">0</b><span><i class="dot" style="background:var(--ok)"></i>Đã thuộc</span></div>
+        <div class="tile"><b id="tBad">0</b><span><i class="dot" style="background:var(--bad)"></i>Đang sai</span></div>
+        <div class="tile"><b id="tNew">0</b><span><i class="dot" style="background:var(--line-2)"></i>Chưa học</span></div>
+        <div class="tile fire"><b id="tDays">0</b><span>Ngày học liên tiếp</span></div>
+      </div>
+      <div class="dash-foot">
+        <button class="btn danger" id="resetBtn" style="padding:8px 14px;font-size:13px">Xoá tiến trình môn này</button>
+      </div>
+      <div class="confirm" id="resetConfirm" hidden style="grid-column:1/-1">
+        <span>Xoá toàn bộ tiến trình môn <b id="resetCode"></b> của <b id="resetName"></b>? Không hoàn tác được.</span>
+        <button class="btn danger" id="resetYes" style="padding:8px 14px;font-size:13px">Xoá và học lại</button>
+        <button class="btn ghost" id="resetNo" style="padding:8px 14px;font-size:13px">Huỷ</button>
       </div>
     </section>
+
+    <section class="cta">
+      <button class="btn primary big" id="startBtn">Bắt đầu học</button>
+      <button class="btn warm big" id="weakBtn">Học câu sai &amp; chưa học<span class="sub" id="weakSub"></span></button>
+      <button class="btn big" id="resumeBtn" hidden>Tiếp tục</button>
+    </section>
+    <p class="note" id="poolNote" style="margin:-8px 0 0"></p>
 
     <section class="glass pad" style="display:flex;flex-direction:column;gap:14px">
       <div class="section-h"><h2>Chọn chủ đề</h2><button class="btn ghost" id="allTopics" style="padding:6px 12px;font-size:13px">Chọn tất cả</button></div>
@@ -336,9 +382,9 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
 
     <section class="glass pad opts">
       <div class="field">
-        <span class="lbl">Lấy câu hỏi từ</span>
+        <span class="lbl">Nút "Bắt đầu học" lấy câu từ</span>
         <div class="seg" id="poolSeg"><span class="pill-bg"></span>
-          <button data-v="all">Tất cả</button><button data-v="new">Chưa làm</button><button data-v="wrong">Đang sai</button>
+          <button data-v="all">Tất cả</button><button data-v="weak">Sai &amp; chưa học</button><button data-v="wrong">Chỉ câu sai</button><button data-v="new">Chưa học</button>
         </div>
       </div>
       <div class="field">
@@ -353,18 +399,12 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
         <label class="tog"><input type="checkbox" id="optAuto"> Tự chuyển câu sau 2 giây khi trả lời đúng</label>
       </div>
     </section>
-
-    <section class="cta">
-      <button class="btn primary big" id="startBtn">Bắt đầu học</button>
-      <button class="btn big" id="resumeBtn" hidden>Tiếp tục</button>
-      <span class="note" id="poolNote"></span>
-    </section>
   </main>
 
   <!-- QUIZ -->
   <main id="quiz" class="wrap" hidden>
     <div class="qtop">
-      <button class="btn ghost" id="quitBtn" title="Lưu và về trang chủ">← Thoát</button>
+      <button class="btn ghost" id="quitBtn" title="Lưu và về trang môn học">← Thoát</button>
       <div class="grow">
         <div class="pbar"><i id="pfill" style="width:0"></i></div>
         <div class="qcount"><span id="qpos"></span><span class="ok" id="qok"></span><span class="bad" id="qbad"></span>
@@ -385,22 +425,24 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
 
   <!-- RESULTS -->
   <main id="results" class="wrap stagger" hidden>
-    <section class="hero"><span class="eyebrow">Kết quả lượt học</span><h1 id="rTitle">Hoàn thành!</h1></section>
+    <section class="hero"><span class="eyebrow" id="rEyebrow">Kết quả lượt học</span><h1 id="rTitle">Hoàn thành!</h1></section>
     <section class="glass pad score">
       <div class="bigring">
         <svg viewBox="0 0 150 150"><circle class="track" cx="75" cy="75" r="62"/><circle class="val" id="rRing" cx="75" cy="75" r="62" stroke-dasharray="389.6" stroke-dashoffset="389.6"/></svg>
         <div class="lbl"><b id="rPct">0%</b><small>đúng lần đầu</small></div>
       </div>
-      <div class="stats">
+      <div class="rstats">
         <div class="tile"><b id="rOk">0</b><span>Đúng</span></div>
         <div class="tile"><b id="rBad">0</b><span>Sai</span></div>
         <div class="tile"><b id="rTime">0:00</b><span>Thời gian</span></div>
       </div>
     </section>
+    <p class="note" style="margin:-6px 0 0">Tiến trình lượt này đã được lưu.</p>
     <section class="cta">
       <button class="btn primary big" id="retryWrongBtn">Ôn lại câu sai</button>
+      <button class="btn warm big" id="weakBtn2">Học câu sai &amp; chưa học</button>
       <button class="btn big" id="againBtn">Lượt mới</button>
-      <button class="btn ghost" id="homeBtn">Trang chủ</button>
+      <button class="btn ghost" id="homeBtn">Về trang môn</button>
     </section>
     <section class="glass pad" style="display:flex;flex-direction:column;gap:14px">
       <h2 style="font-size:19px">Theo chủ đề</h2>
@@ -413,18 +455,17 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
   </main>
 </div>
 
-<!-- NAME MODAL -->
 <div class="overlay" id="nameModal" hidden>
   <form class="modal" id="nameForm" autocomplete="off">
     <span class="wave" aria-hidden="true">👋</span>
     <div style="display:flex;flex-direction:column;gap:6px">
       <h2>Chào bạn! Bạn tên gì?</h2>
-      <p class="muted" style="margin:0">Nhập tên để bắt đầu ôn tập DSR301.</p>
+      <p class="muted" style="margin:0">Nhập tên để bắt đầu ôn tập kì 5.</p>
     </div>
     <input class="input" id="nameInput" maxlength="40" placeholder="Ví dụ: Nguyễn Văn An" aria-label="Tên của bạn">
     <div class="why">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span id="whyText">Tên của bạn được dùng để lưu tiến trình học tập: câu đã thuộc, câu còn sai và lượt đang làm dở. Lần sau chỉ cần nhập đúng tên này là học tiếp được.</span>
+      <span id="whyText"></span>
     </div>
     <div id="knownWrap" hidden style="display:flex;flex-direction:column;gap:8px">
       <span class="note">Đã học trên máy này</span>
@@ -438,16 +479,17 @@ canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:non
 <canvas id="confetti" hidden></canvas>
 
 <script src="config.js"></script>
-<script src="questions.js"></script>
 <script>
 (function(){
 "use strict";
-const Q = window.DSR_Q || [], TOPICS = window.DSR_TOPICS || [];
+const SUBJECTS = [
+  {code: "DSR301", name: "Data Science with R", desc: "R, SQL, trực quan hoá ggplot2, Shiny, SpaceX capstone", count: 262, file: "data/dsr301.js", color: "#2f6fed"},
+  {code: "DPL302", name: "Deep Learning", desc: "Neural networks, tối ưu, CNN, RNN/LSTM, attention & Transformer", count: 252, file: "data/dpl302.js", color: "#ff6b4a"}
+];
 const SYNC_URL = (window.DSR_SYNC_URL || "").replace(/\/+$/, "");
-const byId = {}; Q.forEach(q => byId[q.id] = q);
 const KEY = "dsr301-quiz-v2", OLD_KEY = "dsr301-quiz-v1";
 const $ = id => document.getElementById(id);
-const LET = "ABCDE";
+const LET = "ABCDE", AUTO_MS = 2000;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- helpers ---------- */
@@ -455,7 +497,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const fmtText = s => esc(s).replace(/\b([A-Za-z_][\w.]*\([^()]*\)|[A-Za-z_]+\$[A-Za-z_]+|%>%)/g, '<span class="mono">$1</span>');
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const fmtTime = ms => { const s = Math.round(ms / 1000), m = Math.floor(s / 60); return m + ":" + String(s % 60).padStart(2, "0"); };
-const today = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
+const dayStr = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const today = () => dayStr(new Date()), yesterday = () => dayStr(new Date(Date.now() - 864e5));
 function slugify(name){
   return name.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D")
     .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
@@ -468,14 +511,13 @@ function countTo(el, to, suffix = "", dur = 900){
   requestAnimationFrame(step);
 }
 function setRing(el, pct){ const c = 389.6; requestAnimationFrame(() => el.setAttribute("stroke-dashoffset", c - c * pct / 100)); }
-function ripple(e){
+document.addEventListener("pointerdown", e => {
   const b = e.target.closest(".btn,.ans"); if (!b || b.disabled) return;
   const r = b.getBoundingClientRect(), s = Math.max(r.width, r.height), sp = document.createElement("span");
   sp.className = "ripple"; sp.style.width = sp.style.height = s + "px";
   sp.style.left = (e.clientX - r.left - s / 2) + "px"; sp.style.top = (e.clientY - r.top - s / 2) + "px";
   b.appendChild(sp); setTimeout(() => sp.remove(), 650);
-}
-document.addEventListener("pointerdown", ripple);
+});
 function toast(msg){ const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 1900); }
 function sparks(btn, color){
   if (reduced) return;
@@ -490,36 +532,40 @@ function sparks(btn, color){
 function confetti(){
   if (reduced) return;
   const cv = $("confetti"), ctx = cv.getContext("2d"); cv.hidden = false;
-  const W = cv.width = innerWidth * devicePixelRatio, H = cv.height = innerHeight * devicePixelRatio;
+  const dpr = devicePixelRatio || 1, W = cv.width = innerWidth * dpr, H = cv.height = innerHeight * dpr;
   const cols = ["#2f6fed","#12b5a5","#ff6b4a","#f2bb55","#3ed38a","#ff8fb1"];
-  const P = Array.from({length: 170}, () => ({x: W / 2 + (Math.random() - .5) * W * .3, y: H * .35, vx: (Math.random() - .5) * 26 * devicePixelRatio, vy: (-Math.random() * 22 - 8) * devicePixelRatio,
-    s: (6 + Math.random() * 8) * devicePixelRatio, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)]}));
+  const P = Array.from({length: 170}, () => ({x: W / 2 + (Math.random() - .5) * W * .3, y: H * .35, vx: (Math.random() - .5) * 26 * dpr, vy: (-Math.random() * 22 - 8) * dpr,
+    s: (6 + Math.random() * 8) * dpr, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)]}));
   const t0 = performance.now();
   (function frame(t){
     ctx.clearRect(0, 0, W, H);
-    P.forEach(p => { p.vy += .55 * devicePixelRatio; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+    P.forEach(p => { p.vy += .55 * dpr; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
       ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore(); });
     if (t - t0 < 3200) requestAnimationFrame(frame); else { ctx.clearRect(0, 0, W, H); cv.hidden = true; }
   })(t0);
 }
 
 /* ---------- storage ---------- */
-let db = loadDb();
-function loadDb(){
+const blankSubj = () => ({hist: {}, settings: {topics: [], pool: "all", count: 20, shuffle: true, requeue: true, auto2: true}, session: null, lastWrong: []});
+const blankUser = name => ({name, subjects: {}, subject: null, days: {count: 0, last: null}, updated: 0});
+function migrate(u){
+  if (!u) return u;
+  if (u.hist && !u.subjects){
+    u.subjects = {DSR301: {hist: u.hist, settings: u.settings || blankSubj().settings, session: u.session || null, lastWrong: u.lastWrong || []}};
+    u.subject = "DSR301"; delete u.hist; delete u.settings; delete u.session; delete u.lastWrong;
+  }
+  u.subjects = u.subjects || {}; u.days = u.days || {count: 0, last: null};
+  return u;
+}
+let db = (() => {
   let d = null; try { d = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e) {}
   d = d || {users: {}, current: null};
-  try {
-    const old = JSON.parse(localStorage.getItem(OLD_KEY) || "null");
-    if (old && old.hist && Object.keys(old.hist).length && !d.legacy) d.legacy = old.hist;
-  } catch(e) {}
+  Object.keys(d.users).forEach(k => migrate(d.users[k]));
+  try { const old = JSON.parse(localStorage.getItem(OLD_KEY) || "null"); if (old && old.hist && Object.keys(old.hist).length && !d.legacyDone) d.legacy = old.hist; } catch(e) {}
   return d;
-}
+})();
 function saveDb(){ try { localStorage.setItem(KEY, JSON.stringify(db)); } catch(e) {} }
-function blankUser(name){
-  return {name, hist: {}, settings: {topics: [], pool: "all", count: 20, shuffle: true, requeue: true, auto2: true},
-    session: null, lastWrong: [], days: {count: 0, last: null}, updated: 0};
-}
-let U = null;   // current user profile
+let U = null, S = null, SUBJ = null, Q = [], TOPICS = [], byId = {};
 function touch(){ U.updated = Date.now(); db.users[db.current] = U; saveDb(); schedulePush(); }
 
 /* ---------- remote sync (Cloudflare Worker → GitHub JSON) ---------- */
@@ -531,13 +577,9 @@ async function pull(slug){
   const r = await fetch(`${SYNC_URL}/progress/${slug}`, {cache: "no-store"});
   if (r.status === 404) return null;
   if (!r.ok) throw new Error("HTTP " + r.status);
-  return r.json();
+  return migrate(await r.json());
 }
-function schedulePush(delay = 15000){
-  if (!SYNC_URL) return;
-  setSync("busy", "Đang lưu…");
-  clearTimeout(pushTimer); pushTimer = setTimeout(pushNow, delay);
-}
+function schedulePush(delay = 15000){ if (!SYNC_URL) return; setSync("busy", "Đang lưu…"); clearTimeout(pushTimer); pushTimer = setTimeout(pushNow, delay); }
 async function pushNow(){
   if (!SYNC_URL || !U || pushing) return;
   pushing = true; clearTimeout(pushTimer);
@@ -551,10 +593,16 @@ async function pushNow(){
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && pushTimer) pushNow(); });
 function merge(local, remote){
   if (!remote) return local; if (!local) return remote;
-  const out = Object.assign({}, (remote.updated || 0) > (local.updated || 0) ? remote : local);
-  const h = Object.assign({}, remote.hist || {});
-  Object.entries(local.hist || {}).forEach(([id, v]) => { const r = h[id]; if (!r || (v.t || 0) >= (r.t || 0)) h[id] = Object.assign({}, v, {seen: Math.max(v.seen || 0, (r && r.seen) || 0)}); });
-  out.hist = h; out.name = local.name || remote.name;
+  const newer = (remote.updated || 0) > (local.updated || 0) ? remote : local;
+  const out = JSON.parse(JSON.stringify(newer));
+  new Set([...Object.keys(local.subjects || {}), ...Object.keys(remote.subjects || {})]).forEach(code => {
+    const l = (local.subjects || {})[code], r = (remote.subjects || {})[code];
+    if (!l || !r){ out.subjects[code] = JSON.parse(JSON.stringify(l || r)); return; }
+    const h = Object.assign({}, r.hist);
+    Object.entries(l.hist || {}).forEach(([id, v]) => { const x = h[id]; if (!x || (v.t || 0) >= (x.t || 0)) h[id] = v; });
+    out.subjects[code].hist = h;
+  });
+  out.name = local.name || remote.name;
   return out;
 }
 
@@ -563,67 +611,117 @@ function openNameModal(){
   const known = Object.values(db.users);
   $("knownWrap").hidden = !known.length;
   $("known").innerHTML = known.map(u => `<button type="button" data-n="${esc(u.name)}"><span class="avatar">${esc(initials(u.name))}</span>${esc(u.name)}</button>`).join("");
-  $("whyText").textContent = "Tên của bạn được dùng để lưu tiến trình học tập: câu đã thuộc, câu còn sai và lượt đang làm dở. " +
+  $("whyText").textContent = "Tên của bạn được dùng để lưu tiến trình học tập của từng môn: câu đã thuộc, câu còn sai và lượt đang làm dở. " +
     (SYNC_URL ? "Tiến trình được lưu lên GitHub, nên ở máy nào cũng chỉ cần nhập đúng tên này là học tiếp được."
-              : "Hiện tiến trình được lưu trên trình duyệt này; lần sau nhập đúng tên này để học tiếp.");
+              : "Tiến trình được lưu trên trình duyệt này; lần sau nhập đúng tên này để học tiếp.");
   $("nameErr").textContent = ""; $("nameModal").hidden = false;
   setTimeout(() => $("nameInput").focus(), 300);
 }
 $("known").addEventListener("click", e => { const b = e.target.closest("button"); if (b){ $("nameInput").value = b.dataset.n; $("nameForm").requestSubmit(); } });
 $("nameForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const name = $("nameInput").value.trim().replace(/\s+/g, " ");
-  const slug = slugify(name);
+  const name = $("nameInput").value.trim().replace(/\s+/g, " "), slug = slugify(name);
   if (name.length < 2 || !slug){ $("nameErr").textContent = "Tên cần ít nhất 2 ký tự (chữ hoặc số)."; return; }
   const go = $("nameGo"); go.disabled = true; go.innerHTML = '<span class="spinner"></span>Đang tải tiến trình…';
-  let profile = db.users[slug] || null, remote = null, offline = false;
+  let remote = null, offline = false;
   try { remote = await pull(slug); } catch(err){ offline = true; }
-  profile = merge(profile, remote) || blankUser(name);
-  if (!profile.name) profile.name = name;
   const isNew = !db.users[slug] && !remote;
-  if (isNew && db.legacy){ profile.hist = db.legacy; delete db.legacy; }
+  let profile = merge(db.users[slug] || null, remote) || blankUser(name);
+  if (!profile.name) profile.name = name;
+  if (isNew && db.legacy){ profile.subjects.DSR301 = Object.assign(blankSubj(), {hist: db.legacy}); delete db.legacy; db.legacyDone = true; }
   db.users[slug] = profile; db.current = slug; U = profile; saveDb();
-  go.disabled = false; go.textContent = "Vào học";
-  $("nameModal").hidden = true;
+  go.disabled = false; go.textContent = "Vào học"; $("nameModal").hidden = true;
   if (offline) setSync("err", "Không kết nối được GitHub, đang lưu trên máy"); else syncIdle();
   if (remote && !isNew) toast("Đã tải tiến trình của " + profile.name);
-  showHome(isNew ? "new" : "back");
+  showUser(); showPicker(isNew);
 });
 $("userBtn").onclick = () => { if (pushTimer) pushNow(); $("nameInput").value = ""; openNameModal(); };
+function showUser(){ $("userBtn").hidden = false; $("avatar").textContent = initials(U.name); $("userName").textContent = U.name; }
 
-/* ---------- view switching ---------- */
+/* ---------- views ---------- */
 function show(name){
-  ["home","quiz","results"].forEach(n => { const el = $(n); el.hidden = n !== name; });
+  ["pick","home","quiz","results"].forEach(n => $(n).hidden = n !== name);
   const el = $(name); el.classList.remove("view"); void el.offsetWidth; el.classList.add("view");
+  $("subjBtn").hidden = name === "pick" || !SUBJ;
   window.scrollTo({top: 0, behavior: reduced ? "auto" : "smooth"});
 }
-function status(id){ const h = U.hist[id]; if (!h) return "new"; return h.last ? "ok" : "bad"; }
+const status = id => { const h = S.hist[id]; return !h ? "new" : h.last ? "ok" : "bad"; };
+function daysCount(){ const d = U.days || {}; return d.last === today() || d.last === yesterday() ? d.count || 0 : 0; }
+
+/* ---------- SUBJECT PICKER ---------- */
+function subjStats(meta){
+  const s = U.subjects[meta.code]; let ok = 0, bad = 0;
+  if (s) Object.values(s.hist).forEach(h => h.last ? ok++ : bad++);
+  return {ok, bad, total: meta.count};
+}
+function showPicker(isNew){
+  const first = U.name.split(" ").slice(-1)[0];
+  $("pickGreet").innerHTML = isNew ? `Chào <span class="grad">${esc(first)}</span>, chọn môn để bắt đầu` : `Hôm nay ôn môn nào, <span class="grad">${esc(first)}</span>?`;
+  $("subjects").innerHTML = SUBJECTS.map(m => {
+    const st = subjStats(m), pct = Math.round(st.ok / st.total * 100);
+    return `<button class="subj" data-code="${m.code}" style="--c:${m.color}">
+      <span class="code">${m.code}</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><h2>${esc(m.name)}</h2><span class="note">${esc(m.desc)}</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="bar"><i data-w="${st.ok / st.total * 100}" style="background:var(--ok)"></i><i data-w="${st.bad / st.total * 100}" style="background:var(--bad)"></i></span>
+        <span class="stats"><span>${m.count} câu</span><span>${st.ok} thuộc · ${st.bad} sai · ${pct}%</span></span>
+      </div>
+      <span class="go"><span>${st.ok + st.bad ? "Học tiếp" : "Bắt đầu"}</span><span>→</span></span></button>`;
+  }).join("");
+  show("pick");
+  setTimeout(() => document.querySelectorAll(".subj .bar i").forEach(i => i.style.width = i.dataset.w + "%"), 200);
+}
+const loaded = {};
+function loadSubject(meta){
+  if (window.DSR_SUBJECTS && window.DSR_SUBJECTS[meta.code]) return Promise.resolve(window.DSR_SUBJECTS[meta.code]);
+  if (loaded[meta.code]) return loaded[meta.code];
+  return loaded[meta.code] = new Promise((res, rej) => {
+    const sc = document.createElement("script"); sc.src = meta.file;
+    sc.onload = () => res(window.DSR_SUBJECTS[meta.code]); sc.onerror = () => { delete loaded[meta.code]; rej(new Error("load")); };
+    document.head.appendChild(sc);
+  });
+}
+$("subjects").addEventListener("click", async e => {
+  const b = e.target.closest(".subj"); if (!b || b.classList.contains("loading")) return;
+  b.classList.add("loading"); b.querySelector(".go span").textContent = "Đang tải câu hỏi…";
+  try { await openSubject(b.dataset.code); }
+  catch(err){ b.classList.remove("loading"); b.querySelector(".go span").textContent = "Lỗi tải, bấm để thử lại"; }
+});
+async function openSubject(code){
+  const meta = SUBJECTS.find(m => m.code === code);
+  SUBJ = await loadSubject(meta);
+  Q = SUBJ.q; TOPICS = SUBJ.topics; byId = {}; Q.forEach(q => byId[q.id] = q);
+  U.subjects[code] = U.subjects[code] || blankSubj();
+  S = U.subjects[code]; S.settings = Object.assign(blankSubj().settings, S.settings || {});
+  U.subject = code; touch();
+  $("subjCode").textContent = code;
+  showHome();
+}
+$("subjBtn").onclick = () => { if (!$("quiz").hidden){ pauseClock(); touch(); } showPicker(false); };
+$("brandBtn").onclick = () => { if (!U) return; if (!$("quiz").hidden){ pauseClock(); touch(); } showPicker(false); };
 
 /* ---------- HOME ---------- */
 function moveSeg(seg){
   const on = seg.querySelector('button[aria-pressed="true"]'), bg = seg.querySelector(".pill-bg");
-  if (!on) return; bg.style.left = on.offsetLeft + "px"; bg.style.width = on.offsetWidth + "px"; bg.style.top = on.offsetTop + "px"; bg.style.height = on.offsetHeight + "px"; bg.style.bottom = "auto";
+  if (!on) return; bg.style.left = on.offsetLeft + "px"; bg.style.width = on.offsetWidth + "px"; bg.style.top = on.offsetTop + "px"; bg.style.height = on.offsetHeight + "px";
 }
-function showHome(mode){
-  $("userBtn").hidden = false; $("avatar").textContent = initials(U.name); $("userName").textContent = U.name;
+function showHome(){
   const first = U.name.split(" ").slice(-1)[0];
-  $("greet").innerHTML = mode === "new" ? `Chào <span class="grad">${esc(first)}</span>, bắt đầu nào!`
-    : `Chào mừng trở lại, <span class="grad">${esc(first)}</span>`;
+  $("homeEyebrow").textContent = `${SUBJ.code} · ${SUBJ.name} · ${Q.length} câu`;
+  const any = Object.keys(S.hist).length;
+  $("greet").innerHTML = any ? `Học tiếp nào, <span class="grad">${esc(first)}</span>` : `Bắt đầu <span class="grad">${SUBJ.code}</span> thôi, ${esc(first)}!`;
+  $("resetConfirm").hidden = true;
   show("home"); renderHome();
 }
 function renderHome(){
   const c = {ok: 0, bad: 0, new: 0}; Q.forEach(q => c[status(q.id)]++);
   const pct = Math.round(c.ok / Q.length * 100);
-  countTo($("tOk"), c.ok); countTo($("tBad"), c.bad); countTo($("tNew"), c.new);
-  const d = U.days || {count: 0, last: null};
-  const y = new Date(Date.now() - 864e5); const yest = y.getFullYear() + "-" + String(y.getMonth()+1).padStart(2,"0") + "-" + String(y.getDate()).padStart(2,"0");
-  countTo($("tDays"), d.last === today() || d.last === yest ? d.count : 0);
+  countTo($("tOk"), c.ok); countTo($("tBad"), c.bad); countTo($("tNew"), c.new); countTo($("tDays"), daysCount());
   countTo($("masteryPct"), pct, "%"); setRing($("ringVal"), pct);
-
-  const st = U.settings, sel = st.topics;
+  const st = S.settings, sel = st.topics;
   const per = {}; Q.forEach(q => { const p = per[q.t] = per[q.t] || {n: 0, ok: 0, bad: 0}; p.n++; const s = status(q.id); if (s === "ok") p.ok++; if (s === "bad") p.bad++; });
   $("topics").innerHTML = TOPICS.map(t => {
-    const p = per[t] || {n: 0, ok: 0, bad: 0}, on = sel.length === 0 || sel.includes(t);
+    const p = per[t] || {n: 1, ok: 0, bad: 0}, on = sel.length === 0 || sel.includes(t);
     return `<button class="topic" data-t="${esc(t)}" aria-pressed="${on}"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>
       <span class="tt">${esc(t)}</span>
       <span class="mini"><i style="width:${p.ok / p.n * 100}%;background:var(--ok)"></i><i style="width:${p.bad / p.n * 100}%;background:var(--bad)"></i></span>
@@ -634,69 +732,83 @@ function renderHome(){
   document.querySelectorAll("#countSeg button").forEach(b => b.setAttribute("aria-pressed", +b.dataset.v === st.count));
   requestAnimationFrame(() => { moveSeg($("poolSeg")); moveSeg($("countSeg")); });
   $("optShuffle").checked = st.shuffle; $("optRequeue").checked = st.requeue; $("optAuto").checked = st.auto2 !== false;
-  const pool = buildPool(), n = st.count ? Math.min(st.count, pool.length) : pool.length;
-  $("poolNote").textContent = st.topics.length === 1 && st.topics[0] === "__none__" ? "Hãy chọn ít nhất một chủ đề." :
-    pool.length ? `${n} câu trong lượt này · ${pool.length} câu phù hợp` : "Không có câu nào phù hợp bộ lọc.";
+  const pool = buildPool(st.pool), n = st.count ? Math.min(st.count, pool.length) : pool.length;
+  const weak = buildPool("weak"), wn = st.count ? Math.min(st.count, weak.length) : weak.length;
+  $("poolNote").textContent = sel[0] === "__none__" ? "Hãy chọn ít nhất một chủ đề." :
+    pool.length ? `"Bắt đầu học": ${n} câu mỗi lượt (${pool.length} câu phù hợp bộ lọc).` : "Không có câu nào phù hợp bộ lọc của nút Bắt đầu học.";
   $("startBtn").disabled = !pool.length;
-  const s = U.session;
+  $("weakSub").textContent = weak.length ? `${weak.length} câu chưa thuộc · lượt này ${wn} câu` : "Đã thuộc hết chủ đề đang chọn!";
+  $("weakBtn").disabled = !weak.length;
+  const s = S.session;
   if (s && s.queue && s.idx < s.queue.length){ $("resumeBtn").hidden = false; $("resumeBtn").textContent = `Tiếp tục · câu ${s.idx + 1}/${s.queue.length}`; }
   else $("resumeBtn").hidden = true;
+  $("resetCode").textContent = SUBJ.code; $("resetName").textContent = U.name;
 }
-function buildPool(){
-  const st = U.settings;
-  return Q.filter(q => (st.topics.length === 0 || st.topics.includes(q.t)) &&
-    (st.pool === "all" || status(q.id) === (st.pool === "new" ? "new" : "bad"))).map(q => q.id);
+function buildPool(mode){
+  const sel = S.settings.topics;
+  return Q.filter(q => (sel.length === 0 || sel.includes(q.t)) && (
+    mode === "all" || (mode === "weak" && status(q.id) !== "ok") || (mode === "wrong" && status(q.id) === "bad") || (mode === "new" && status(q.id) === "new")
+  )).map(q => q.id);
 }
 $("topics").addEventListener("click", e => {
   const b = e.target.closest(".topic"); if (!b) return;
-  const t = b.dataset.t, st = U.settings;
+  const t = b.dataset.t, st = S.settings;
   let sel = st.topics.length === 0 ? TOPICS.slice() : st.topics.filter(x => x !== "__none__");
   sel = sel.includes(t) ? sel.filter(x => x !== t) : sel.concat(t);
   st.topics = sel.length === TOPICS.length ? [] : sel.length === 0 ? ["__none__"] : sel;
   touch(); renderHome();
 });
-$("allTopics").onclick = () => { U.settings.topics = U.settings.topics.length === 0 ? ["__none__"] : []; touch(); renderHome(); };
-$("poolSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; U.settings.pool = b.dataset.v; touch(); renderHome(); });
-$("countSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; U.settings.count = +b.dataset.v; touch(); renderHome(); });
+$("allTopics").onclick = () => { S.settings.topics = S.settings.topics.length === 0 ? ["__none__"] : []; touch(); renderHome(); };
+$("poolSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.settings.pool = b.dataset.v; touch(); renderHome(); });
+$("countSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.settings.count = +b.dataset.v; touch(); renderHome(); });
 ["optShuffle","optRequeue","optAuto"].forEach(id => $(id).addEventListener("change", e => {
-  U.settings[{optShuffle: "shuffle", optRequeue: "requeue", optAuto: "auto2"}[id]] = e.target.checked; touch();
+  S.settings[{optShuffle: "shuffle", optRequeue: "requeue", optAuto: "auto2"}[id]] = e.target.checked; touch();
 }));
 addEventListener("resize", () => { if (!$("home").hidden){ moveSeg($("poolSeg")); moveSeg($("countSeg")); } });
+$("resetBtn").onclick = () => { $("resetConfirm").hidden = false; };
+$("resetNo").onclick = () => { $("resetConfirm").hidden = true; };
+$("resetYes").onclick = () => {
+  const keepSettings = S.settings;
+  U.subjects[SUBJ.code] = Object.assign(blankSubj(), {settings: keepSettings}); S = U.subjects[SUBJ.code];
+  touch(); pushNow(); $("resetConfirm").hidden = true;
+  toast(`Đã xoá tiến trình ${SUBJ.code}, học lại từ đầu`);
+  showHome();
+};
 
 /* ---------- SESSION ---------- */
+function takeFrom(mode){ let pool = buildPool(mode); if (S.settings.shuffle) shuffle(pool); if (S.settings.count) pool = pool.slice(0, S.settings.count); return pool; }
 function startWith(ids){
-  const q = ids.slice(); if (U.settings.shuffle) shuffle(q);
-  U.session = {queue: q, idx: 0, first: {}, picks: {}, retry: {}, start: Date.now(), elapsed: 0, streak: 0};
+  const q = ids.slice(); if (S.settings.shuffle) shuffle(q);
+  S.session = {queue: q, idx: 0, first: {}, picks: {}, retry: {}, start: Date.now(), elapsed: 0, streak: 0};
   touch(); show("quiz"); renderQ(false);
 }
-$("startBtn").onclick = () => { let pool = buildPool(); if (U.settings.shuffle) shuffle(pool); if (U.settings.count) pool = pool.slice(0, U.settings.count); startWith(pool); };
-$("resumeBtn").onclick = () => { U.session.start = Date.now(); show("quiz"); renderQ(false); };
-$("quitBtn").onclick = () => { pauseClock(); touch(); pushNow(); showHome("back"); };
-$("brandBtn").onclick = () => { if (!U) return; if (!$("quiz").hidden){ pauseClock(); touch(); } showHome("back"); };
+$("startBtn").onclick = () => startWith(takeFrom(S.settings.pool));
+$("weakBtn").onclick = () => startWith(takeFrom("weak"));
+$("weakBtn2").onclick = () => { const p = takeFrom("weak"); if (p.length) startWith(p); else { toast("Bạn đã thuộc hết chủ đề đang chọn!"); showHome(); } };
+$("resumeBtn").onclick = () => { S.session.start = Date.now(); show("quiz"); renderQ(false); };
+$("quitBtn").onclick = () => { pauseClock(); touch(); pushNow(); showHome(); };
 $("shuffleBtn").onclick = () => {
-  const s = U.session, k = s.answered ? 1 : 0;
+  const s = S.session, k = s.answered ? 1 : 0;
   s.queue = s.queue.slice(0, s.idx + k).concat(shuffle(s.queue.slice(s.idx + k))); touch();
   if (!k) renderQ(true);
   toast("Đã trộn các câu còn lại");
 };
-function pauseClock(){ clearTimeout(autoTimer); const s = U.session; if (s && s.start){ s.elapsed += Date.now() - s.start; s.start = null; } }
+let picked = [], autoTimer = null;
+function pauseClock(){ clearTimeout(autoTimer); const s = S && S.session; if (s && s.start){ s.elapsed += Date.now() - s.start; s.start = null; } }
 function updateCounts(){
-  const s = U.session, v = Object.values(s.first);
+  const s = S.session, v = Object.values(s.first);
   $("qpos").textContent = `Câu ${Math.min(s.idx + 1, s.queue.length)} / ${s.queue.length}`;
   $("qok").textContent = `✓ ${v.filter(Boolean).length}`; $("qbad").textContent = `✗ ${v.filter(x => x === false).length}`;
   $("streak").hidden = (s.streak || 0) < 2; $("streakN").textContent = s.streak || 0;
   $("pfill").style.width = ((s.idx + (s.answered ? 1 : 0)) / s.queue.length * 100) + "%";
 }
-
-let picked = [], autoTimer = null;
-const AUTO_MS = 2000;
 function renderQ(animate){
   clearTimeout(autoTimer);
-  const s = U.session, id = s.queue[s.idx], q = byId[id], need = q.a.length;
+  const s = S.session, id = s.queue[s.idx], q = byId[id], need = q.a.length;
   s.answered = false; picked = [];
   const paint = () => {
     updateCounts();
-    $("qmeta").innerHTML = `<span class="tag">${esc(q.t)}</span><span class="tag">Slide #${q.id}</span>` +
+    $("qmeta").innerHTML = `<span class="tag">${esc(SUBJ.code)}</span><span class="tag">${esc(q.t)}</span><span class="tag">Slide #${q.id}</span>` +
       (need > 1 ? `<span class="tag multi">Chọn ${need} đáp án</span>` : "") +
       (s.retry[id] && s.first[id] === false ? `<span class="tag retry">Làm lại câu sai</span>` : "");
     const img = $("qimg"); img.src = q.img; img.width = q.w; img.height = q.h;
@@ -709,15 +821,12 @@ function renderQ(animate){
   if (animate && !reduced && card.animate){
     $("feedback").hidden = true;
     card.animate([{opacity: 1, transform: "none"}, {opacity: 0, transform: "translateX(-40px) rotate(-1deg)"}], {duration: 180, easing: "ease-in", fill: "forwards"});
-    setTimeout(() => {
-      paint();
-      card.animate([{opacity: 0, transform: "translateX(48px) rotate(1deg)"}, {opacity: 1, transform: "none"}], {duration: 420, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards"});
-    }, 180);
+    setTimeout(() => { paint(); card.animate([{opacity: 0, transform: "translateX(48px) rotate(1deg)"}, {opacity: 1, transform: "none"}], {duration: 420, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards"}); }, 180);
   } else paint();
 }
 $("answers").addEventListener("click", e => { const b = e.target.closest(".ans"); if (b) choose(b.dataset.l); });
 function choose(L){
-  const s = U.session; if (!s || s.answered) return;
+  const s = S && S.session; if (!s || s.answered) return;
   const q = byId[s.queue[s.idx]]; if (LET.indexOf(L) >= q.n) return;
   const need = q.a.length;
   if (need === 1){ picked = [L]; grade(); return; }
@@ -730,16 +839,15 @@ $("checkBtn").onclick = () => grade();
 const ICON_OK = '<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>', ICON_BAD = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 const ICON_TIP = '<svg viewBox="0 0 24 24"><path d="M9 21h6v-1.5H9V21zm3-19a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2z"/></svg>';
 function grade(){
-  const s = U.session, id = s.queue[s.idx], q = byId[id];
+  const s = S.session, id = s.queue[s.idx], q = byId[id];
   const pick = picked.slice().sort().join(""), correct = pick === q.a;
   s.answered = true;
   if (!(id in s.first)){ s.first[id] = correct; s.picks[id] = pick; }
-  const h = U.hist[id] || {seen: 0, wrong: 0};
-  h.seen++; if (!correct) h.wrong++; h.last = correct; h.t = Date.now(); U.hist[id] = h;
-  if (!correct && U.settings.requeue && !s.retry[id]){ s.retry[id] = true; s.queue.push(id); }
+  const h = S.hist[id] || {seen: 0, wrong: 0};
+  h.seen++; if (!correct) h.wrong++; h.last = correct; h.t = Date.now(); S.hist[id] = h;
+  if (!correct && S.settings.requeue && !s.retry[id]){ s.retry[id] = true; s.queue.push(id); }
   s.streak = correct ? (s.streak || 0) + 1 : 0;
-  const d = U.days || (U.days = {count: 0, last: null});
-  if (d.last !== today()){ const y = new Date(Date.now() - 864e5); const ys = y.getFullYear() + "-" + String(y.getMonth()+1).padStart(2,"0") + "-" + String(y.getDate()).padStart(2,"0"); d.count = d.last === ys ? d.count + 1 : 1; d.last = today(); }
+  const d = U.days; if (d.last !== today()){ d.count = d.last === yesterday() ? (d.count || 0) + 1 : 1; d.last = today(); }
   touch(); updateCounts();
   if (correct && s.streak >= 2){ const el = $("streak"); el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); }
   if (correct && [3, 5, 10, 15, 20, 30].includes(s.streak)) toast(`Chuỗi ${s.streak} câu đúng liên tiếp!`);
@@ -758,7 +866,7 @@ function grade(){
     (q.tip ? `<div class="tip"><span class="ic">${ICON_TIP}</span><span><b>Mẹo nhớ</b>${fmtText(q.tip)}</span></div>` : "") +
     `<div class="fb-actions"><span class="note">${!correct && s.retry[id] && s.queue.lastIndexOf(id) > s.idx ? "Câu này sẽ được hỏi lại cuối lượt." : ""}</span>` +
     `<button class="btn primary" id="nextBtn">${last ? "Xem kết quả" : "Câu tiếp →"}</button></div>`;
-  const auto = correct && U.settings.auto2 !== false;
+  const auto = correct && S.settings.auto2 !== false;
   if (auto){
     fb.insertAdjacentHTML("beforeend",
       `<div class="autobar" id="autoBar"><span class="track"><i style="animation-duration:${AUTO_MS}ms"></i></span>` +
@@ -772,7 +880,7 @@ function grade(){
 }
 function next(){
   clearTimeout(autoTimer);
-  const s = U.session; if (!s || !s.answered) return;
+  const s = S.session; if (!s || !s.answered) return;
   s.idx++; touch();
   if (s.idx >= s.queue.length) finish();
   else { window.scrollTo({top: 0, behavior: reduced ? "auto" : "smooth"}); renderQ(true); }
@@ -783,7 +891,7 @@ document.addEventListener("keydown", e => {
   if (k.length === 1 && LET.includes(k)) L = k; else if (/^[1-5]$/.test(k)) L = LET[+k - 1];
   if (L){ e.preventDefault(); choose(L); return; }
   if (e.key === "Enter"){
-    const s = U.session; if (!s) return;
+    const s = S.session; if (!s) return;
     if (s.answered){ e.preventDefault(); next(); }
     else if (!$("checkBtn").disabled && !$("checkRow").hidden){ e.preventDefault(); grade(); }
   }
@@ -792,12 +900,13 @@ document.addEventListener("keydown", e => {
 /* ---------- RESULTS ---------- */
 function finish(){
   pauseClock();
-  const s = U.session, ids = Object.keys(s.first).map(Number);
+  const s = S.session, ids = Object.keys(s.first).map(Number);
   const ok = ids.filter(i => s.first[i]).length, bad = ids.length - ok;
   const pct = ids.length ? Math.round(ok / ids.length * 100) : 0;
   const wrong = ids.filter(i => !s.first[i]);
-  U.lastWrong = wrong; U.session = null; touch(); pushNow();
+  S.lastWrong = wrong; S.session = null; touch(); pushNow();
   show("results");
+  $("rEyebrow").textContent = `Kết quả lượt học · ${SUBJ.code}`;
   $("rTitle").textContent = pct === 100 ? "Tuyệt đối, không sai câu nào!" : pct >= 80 ? "Làm tốt lắm!" : pct >= 50 ? "Khá ổn, ôn thêm chút nữa" : "Cần ôn lại kỹ hơn";
   $("rPct").textContent = "0%"; countTo($("rPct"), pct, "%", 1200); setRing($("rRing"), pct);
   $("rOk").textContent = "0"; $("rBad").textContent = "0"; countTo($("rOk"), ok); countTo($("rBad"), bad); $("rTime").textContent = fmtTime(s.elapsed);
@@ -817,22 +926,23 @@ function finish(){
       `<p class="exp">${fmtText(q.x)}</p>${q.tip ? `<div class="tip"><span class="ic">${ICON_TIP}</span><span><b>Mẹo nhớ</b>${fmtText(q.tip)}</span></div>` : ""}</div></details>`;
   }).join("") : `<div class="empty">Không có câu nào sai lần đầu. Quá đỉnh!</div>`;
   $("retryWrongBtn").hidden = !wrong.length;
+  $("weakBtn2").hidden = !buildPool("weak").length;
   if (pct >= 80) setTimeout(confetti, 400);
 }
-$("retryWrongBtn").onclick = () => startWith(U.lastWrong || []);
-$("againBtn").onclick = () => $("startBtn").click();
-$("homeBtn").onclick = () => showHome("back");
+$("retryWrongBtn").onclick = () => startWith(S.lastWrong || []);
+$("againBtn").onclick = () => startWith(takeFrom(S.settings.pool));
+$("homeBtn").onclick = () => showHome();
 
 /* ---------- boot ---------- */
 (async function boot(){
-  if (db.current && db.users[db.current]){
-    U = db.users[db.current];
-    syncIdle(); showHome("back");
-    if (SYNC_URL){
-      try { const r = await pull(db.current); if (r){ U = merge(U, r); db.users[db.current] = U; saveDb(); if (!$("home").hidden) renderHome(); } syncIdle(); }
-      catch(e){ setSync("err", "Không kết nối được GitHub, đang lưu trên máy"); }
-    }
-  } else { syncIdle(); openNameModal(); }
+  syncIdle();
+  if (!(db.current && db.users[db.current])){ openNameModal(); return; }
+  U = db.users[db.current]; showUser();
+  if (SYNC_URL){
+    try { const r = await pull(db.current); if (r){ U = merge(U, r); db.users[db.current] = U; saveDb(); } }
+    catch(e){ setSync("err", "Không kết nối được GitHub, đang lưu trên máy"); }
+  }
+  showPicker(false);
 })();
 })();
 </script>
