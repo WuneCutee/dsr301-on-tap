@@ -12,6 +12,7 @@ Web ôn tập trắc nghiệm kì 5, gộp nhiều môn trong một trang: https
 - Trả lời xong hiện giải thích và mẹo nhớ; trả lời đúng thì tự chuyển câu sau 2 giây.
 - Nút **Học câu sai & chưa học** bỏ qua các câu đã trả lời đúng.
 - Nút **Xoá tiến trình môn này** để học lại từ đầu.
+- Nút **‹ Câu trước** (phím ← / →) để xem lại các câu đã làm trong lượt, kèm đáp án đã chọn và giải thích.
 - Có trộn câu, lọc theo chủ đề, hỏi lại câu sai cuối lượt, chuỗi câu đúng và thống kê sau mỗi lượt.
 
 ## Cấu trúc
